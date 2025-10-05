@@ -39,7 +39,7 @@ export const TestimonialsSection = () => {
     }, 8000);
 
     return () => clearInterval(interval);
-  }, [currentIndex, testimonialsData.length]);
+  }, [currentIndex]); // Remove testimonialsData.length as it's a constant
 
   return (
     <section className=" min-h-screen flex flex-col items-center justify-center ">
