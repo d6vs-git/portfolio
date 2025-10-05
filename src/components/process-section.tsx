@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
+import { StickyScroll } from "@/components/process-section/sticky-scroll-reveal";
 import { processData } from "@/data/process-data";
 
 export const ProcessSection = () => {

@@ -86,7 +86,7 @@ export const StickyScroll = ({
   return (
     <div
       ref={containerRef}
-      className="relative transition-colors duration-300 ease-out"
+      className="relative transition-colors duration-300 ease-out px-16"
       style={{
         backgroundColor: backgroundColors[activeCard % backgroundColors.length],
       }}

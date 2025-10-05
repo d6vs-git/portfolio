@@ -87,7 +87,7 @@ export const ProjectCard = ({
             src={image || "/placeholder.svg"}
             alt={title}
             fill
-            className="object-cover transition-all duration-700"
+            className="object-contain transition-all duration-700 bg-white"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
