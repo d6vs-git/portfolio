@@ -191,13 +191,7 @@ export const AboutSection = () => {
                   {sections[currentSection]?.content}
                 </motion.p>
 
-                {/* Decorative Line */}
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto max-w-md"
-                />
+                
               </motion.div>
             </AnimatePresence>
           </div>

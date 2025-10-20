@@ -9,14 +9,11 @@ import { gsap } from "gsap";
 
 export const ProjectsSection = () => {
   const sharedCursorRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const handleCursorShow = () => {
     const cursor = sharedCursorRef.current;
     if (!cursor) return;
-    
-    // Hide all cursor types at all levels
-    document.documentElement.style.cursor = 'none';
-    document.body.style.cursor = 'none';
     
     gsap.to(cursor, {
       opacity: 1,
@@ -29,10 +26,6 @@ export const ProjectsSection = () => {
   const handleCursorHide = () => {
     const cursor = sharedCursorRef.current;
     if (!cursor) return;
-    
-    // Restore default cursor
-    document.documentElement.style.cursor = '';
-    document.body.style.cursor = '';
     
     gsap.to(cursor, {
       opacity: 0,
@@ -58,7 +51,7 @@ export const ProjectsSection = () => {
   };
 
   return (
-    <section id="projects" className="py-20">
+    <section id="projects" ref={sectionRef} className="py-20">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
@@ -94,10 +87,10 @@ export const ProjectsSection = () => {
        
       </div>
 
-      {/* Shared Custom Cursor */}
+      {/* Shared Custom Cursor - Fixed positioned to follow mouse */}
       <div
         ref={sharedCursorRef}
-        className="fixed pointer-events-none z-50 flex items-center gap-3 bg-gradient-to-r from-white to-gray-50 text-black px-6 py-4 rounded-full font-semibold text-sm shadow-2xl border border-gray-200/30 backdrop-blur-md"
+        className="fixed pointer-events-none z-[9999] flex items-center gap-3 bg-gradient-to-r from-white to-gray-50 text-black px-6 py-4 rounded-full font-semibold text-sm shadow-2xl border border-gray-200/30 backdrop-blur-md"
         style={{
           opacity: 0,
           transform: "scale(0.8)",

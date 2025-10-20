@@ -81,23 +81,23 @@ export const ProjectCard = ({
         {/* Image Container */}
         <div
           ref={imageRef}
-          className="relative w-full aspect-[4/3] overflow-hidden rounded-3xl bg-gray-900 mb-6"
+          className="relative w-full aspect-[4/3] overflow-hidden rounded-3xl bg-gray-900 mb-6 cursor-none"
         >
           <Image
             src={image || "/placeholder.svg"}
             alt={title}
             fill
-            className="object-contain transition-all duration-700 bg-white"
+            className="object-contain transition-all duration-700 bg-white cursor-none"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
 
         {/* Content */}
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-gray-600 uppercase tracking-wide">
+        <div className="space-y-2 cursor-none">
+          <p className="text-sm font-medium text-gray-600 uppercase tracking-wide cursor-none">
             {category}
           </p>
-          <h3 className="text-2xl font-bold text-gray-900 leading-tight">
+          <h3 className="text-2xl font-bold text-gray-900 leading-tight cursor-none">
             {title}
           </h3>
         </div>
