@@ -6,7 +6,9 @@ import { testimonialsData } from "@/data/testimonial-data";
 
 export const TestimonialsSection = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   // Handle scroll to update current index
   const handleScroll = () => {
@@ -31,18 +33,55 @@ export const TestimonialsSection = () => {
     }
   };
 
-  // Auto scroll every 5 seconds
+  // Detect when section is visible
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            // Reset to first testimonial when section becomes visible
+            setCurrentIndex(0);
+            scrollToTestimonial(0);
+          } else {
+            setIsVisible(false);
+          }
+        });
+      },
+      {
+        threshold: 0.3, // Section needs to be 30% visible
+        rootMargin: "0px"
+      }
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  // Auto scroll only when section is visible
+  useEffect(() => {
+    if (!isVisible) return;
+
     const interval = setInterval(() => {
       const nextIndex = (currentIndex + 1) % testimonialsData.length;
       scrollToTestimonial(nextIndex);
     }, 8000);
 
     return () => clearInterval(interval);
-  }, [currentIndex]); // Remove testimonialsData.length as it's a constant
+  }, [currentIndex, isVisible]);
 
   return (
-    <section id="testimonials" className=" min-h-screen flex flex-col items-center justify-center ">
+    <section 
+      ref={sectionRef}
+      id="testimonials" 
+      className=" min-h-screen flex flex-col items-center justify-center "
+    >
       <h2 className="text-3xl md:text-4xl font-semibold text-center mb-16 text-foreground">
         What Our <span className="text-primary">Clients</span> Say
       </h2>
