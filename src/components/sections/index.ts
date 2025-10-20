@@ -1,0 +1,9 @@
+// Page Sections - Barrel Export
+export { HeroSection } from './hero';
+export { AboutSection } from './about';
+export { ServicesSection } from './services';
+export { ProcessSection } from './process';
+export { ProjectsSection } from './projects';
+export { TestimonialsSection } from './testimonials';
+export { ContactSection } from './contact';
+export { Footer } from './footer';

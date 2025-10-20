@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navbar } from "@/components/navbar";
-import { ErrorBoundary } from "@/components/error-boundary";
+import { Navbar } from "@/components/layout";
+import { ErrorBoundary } from "@/components/common";
 import Image from "next/image";
 
 export const metadata: Metadata = {

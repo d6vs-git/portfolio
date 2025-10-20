@@ -1,8 +1,8 @@
 "use client";
 
 import { projectsData } from "@/data/projects-data";
-import { ProjectCard } from "./projects-section/project-card";
-import { Button } from "./ui/button";
+import { ProjectCard } from "./project-card";
+import { Button } from "@/components/common/button";
 import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { gsap } from "gsap";

@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Mail, Phone, Youtube, MessageCircle } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/common/button";
 
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {

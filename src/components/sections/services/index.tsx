@@ -1,5 +1,5 @@
 import { servicesData } from "@/data/services-data";
-import { FlipCard } from "./services-section/flip-card";
+import { FlipCard } from "./flip-card";
 
 export const ServicesSection = () => {
   return (

@@ -3,10 +3,10 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import Image from "next/image";
-import { Button } from "./ui/button";
-import { FlipText } from "./hero-section/flip-text";
-import { HappyClients } from "./hero-section/happy-clients";
-import { MarqueeText } from "./hero-section/marquee-text";
+import { Button } from "@/components/common/button";
+import { FlipText } from "./flip-text";
+import { HappyClients } from "./happy-clients";
+import { MarqueeText } from "./marquee-text";
 
 export const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
