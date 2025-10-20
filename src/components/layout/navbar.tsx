@@ -10,9 +10,11 @@ interface NavItem {
 
 export const Navbar = () => {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [displayIndex, setDisplayIndex] = useState(0) // For delayed text color change
   const navItems: NavItem[] = useMemo(() => [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
+    { name: "Testimonials", href: "#testimonials" },
     { name: "Services", href: "#services" },
     { name: "Process", href: "#process" },
     { name: "Projects", href: "#projects" },
@@ -30,45 +32,65 @@ export const Navbar = () => {
       gsap.to(indicatorRef.current, {
         x: offsetLeft,
         width: offsetWidth,
-        duration: 0.8,
-        ease: "power3.out",
-      })
-    }
-  }, [])
-
-  // Section highlighting with Intersection Observer
-  useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "-20% 0px -60% 0px",
-      threshold: 0.1,
-    }
-
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const sectionId = entry.target.id
-          const index = navItems.findIndex(item => item.href === `#${sectionId}`)
-          if (index !== -1 && index !== activeIndex) {
-            setActiveIndex(index)
+        duration: 0.2,
+        ease: "power2.inOut",
+        onUpdate: function() {
+          // Update text color at 50% of animation for perfect sync
+          if (this.progress() >= 0.5 && displayIndex !== index) {
+            setDisplayIndex(index)
           }
         }
       })
     }
+  }, [displayIndex])
 
-    const observer = new IntersectionObserver(handleIntersection, observerOptions)
-
-    // Observe all sections
-    navItems.forEach(item => {
-      const sectionId = item.href.replace('#', '')
-      const section = document.getElementById(sectionId)
-      if (section) {
-        observer.observe(section)
+  // Section highlighting with scroll-based detection
+  useEffect(() => {
+    // Use scroll-based detection for better accuracy with sticky/tall sections
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 3 // Check at 1/3 from top
+      
+      let newIndex = 0
+      
+      // Check each section to find which one we're in
+      for (let i = navItems.length - 1; i >= 0; i--) {
+        const sectionId = navItems[i].href.replace('#', '')
+        const section = document.getElementById(sectionId)
+        
+        if (section) {
+          const sectionTop = section.offsetTop
+          
+          if (scrollPosition >= sectionTop) {
+            newIndex = i
+            break
+          }
+        }
       }
-    })
+      
+      if (newIndex !== activeIndex) {
+        setActiveIndex(newIndex)
+      }
+    }
 
+    // Initial check
+    handleScroll()
+    
+    // Listen to scroll events with throttling
+    let ticking = false
+    const scrollListener = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll()
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    window.addEventListener('scroll', scrollListener, { passive: true })
+    
     return () => {
-      observer.disconnect()
+      window.removeEventListener('scroll', scrollListener)
     }
   }, [navItems, activeIndex])
 
@@ -78,47 +100,62 @@ export const Navbar = () => {
 
   // Animate hover lift for non-active items
   useEffect(() => {
+    const cleanupFunctions: (() => void)[] = []
+
     refs.current.forEach((el, i) => {
       if (!el) return
 
-      // Remove previous listeners to avoid stacking
-      el.onmouseenter = null
-      el.onmouseleave = null
-
-      if (i !== activeIndex) {
+      if (i !== displayIndex) {
         const handleMouseEnter = () => {
-          gsap.to(el, { y: -5, duration: 0.8, ease: "power2.out" })
+          gsap.to(el, { 
+            y: -4, 
+            duration: 0.25, 
+            ease: "power1.out" 
+          })
         }
 
         const handleMouseLeave = () => {
-          gsap.to(el, { y: 0, duration: 0.8, ease: "power2.out" })
+          gsap.to(el, { 
+            y: 0, 
+            duration: 0.25, 
+            ease: "power1.inOut" 
+          })
         }
 
         el.addEventListener("mouseenter", handleMouseEnter)
         el.addEventListener("mouseleave", handleMouseLeave)
 
-        // Cleanup function for this element
-        return () => {
+        // Store cleanup function
+        cleanupFunctions.push(() => {
           el.removeEventListener("mouseenter", handleMouseEnter)
           el.removeEventListener("mouseleave", handleMouseLeave)
-        }
+        })
       } else {
-        // Ensure active item stays at y:0
-        gsap.to(el, { y: 0, duration: 0.2 })
+        // Ensure active item stays at y:0 and prevent hover effects
+        gsap.to(el, { y: 0, duration: 0.2, ease: "power1.inOut" })
       }
     })
-  }, [activeIndex])
+
+    // Return cleanup function
+    return () => {
+      cleanupFunctions.forEach(cleanup => cleanup())
+    }
+  }, [displayIndex])
 
   const handleNavClick = (index: number, href: string) => {
     setActiveIndex(index)
+    setDisplayIndex(index) // Immediately update display for clicks
     
     // Smooth scroll to section
     const sectionId = href.replace('#', '')
     const section = document.getElementById(sectionId)
     if (section) {
-      section.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+      const navbarHeight = 80 // Approximate navbar height
+      const sectionTop = section.offsetTop - navbarHeight
+      
+      window.scrollTo({ 
+        top: sectionTop,
+        behavior: 'smooth'
       })
     }
   }
@@ -129,7 +166,7 @@ export const Navbar = () => {
         {/* Orange moving indicator */}
         <div 
           ref={indicatorRef} 
-          className="absolute top-0 bottom-0 rounded-full bg-primary transition-all duration-300" 
+          className="absolute top-0 bottom-0 rounded-full bg-primary" 
           style={{ zIndex: 0 }}
           aria-hidden="true"
         />
@@ -145,9 +182,9 @@ export const Navbar = () => {
               e.preventDefault()
               handleNavClick(i, item.href)
             }}
-            className={`relative z-10 px-5 py-3 rounded-full text-sm font-medium transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2
-              ${i === activeIndex ? "text-primary-foreground" : "text-foreground hover:text-primary"}`}
-            aria-current={i === activeIndex ? "page" : undefined}
+            className={`relative z-10 px-5 py-3 rounded-full text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2
+              ${i === displayIndex ? "text-primary-foreground" : "text-foreground hover:text-primary"}`}
+            aria-current={i === displayIndex ? "page" : undefined}
           >
             {item.name}
           </a>

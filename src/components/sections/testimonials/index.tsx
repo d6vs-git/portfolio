@@ -42,7 +42,7 @@ export const TestimonialsSection = () => {
   }, [currentIndex]); // Remove testimonialsData.length as it's a constant
 
   return (
-    <section className=" min-h-screen flex flex-col items-center justify-center ">
+    <section id="testimonials" className=" min-h-screen flex flex-col items-center justify-center ">
       <h2 className="text-3xl md:text-4xl font-semibold text-center mb-16 text-foreground">
         What Our <span className="text-primary">Clients</span> Say
       </h2>
