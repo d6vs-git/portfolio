@@ -54,18 +54,18 @@ export const FlipCard: React.FC<FlipCardProps> = ({ front, back }) => {
             style={{ backfaceVisibility: "hidden" }}
           >
             {/* Image Container */}
-            <div className="relative w-32 h-32 flex items-center justify-center mb-8 transition-all duration-500 group-hover:scale-110 group-hover:rotate-2">
+            <div className="relative  flex items-center justify-center mb-8 transition-all duration-500 group-hover:scale-110 group-hover:rotate-2">
               <Image
                 src={front.image}
                 alt={front.title}
-                width={80}
-                height={80}
+                width={200}
+                height={200}
                 className="object-contain transition-all duration-500 group-hover:scale-105 filter drop-shadow-lg"
               />
             </div>
 
             {/* Title with enhanced styling */}
-            <div className="relative text-3xl text-gray-900 mb-3 text-center leading-tight transition-all duration-300 group-hover:text-primary">
+            <div className="relative text-2xl text-gray-900 mb-3 text-center leading-tight transition-all duration-300 group-hover:text-primary">
               {front.title}
             </div>
 

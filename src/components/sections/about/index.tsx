@@ -1,231 +1,92 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 
 const sections = [
   {
-    title: "About D6VS",
-    subtitle: "Digital Innovation Partners", 
-    content: "We are D6VS - a team of passionate digital creators who believe in transforming ideas into exceptional digital experiences."
+    title: "Who are we?",
+    subtitle: "Your Digital Growth Partner",
+    content:
+      "D6VS is a creative digital studio specializing in building impactful web, mobile, and AI-powered solutions for ambitious brands and startups. We blend design, technology, and strategy to help you stand out and grow in the digital world.",
   },
   {
-    title: "Our Philosophy",
-    subtitle: "Design with Purpose",
-    content: "We don't just create beautiful interfaces; we craft meaningful experiences that serve a purpose in telling your story."
+    title: "What we do",
+    subtitle: "Web, Mobile, AI & More",
+    content:
+      "From custom websites and mobile apps to advanced AI, machine learning, and Web3 solutions, we deliver end-to-end digital products that are beautiful, robust, and future-ready. Our expertise covers everything from UI/UX, SEO, and e-commerce to cloud infrastructure and DevOps.",
   },
   {
-    title: "Our Process", 
-    subtitle: "Four Pillars of Excellence",
-    content: "Design with intention. Develop with precision. Deploy with confidence. Maintain with dedication."
+    title: "Our Approach",
+    subtitle: "Collaboration & Quality",
+    content:
+      "We believe in close collaboration, transparent communication, and a process that puts your goals first. Every project starts with understanding your vision, followed by thoughtful design, precise development, and ongoing support.",
   },
   {
-    title: "Our Promise",
-    subtitle: "Your Success is Our Mission", 
-    content: "We're not just service providers; we're your digital partners committed to your success and growth."
-  }
+    title: "Why D6VS?",
+    subtitle: "Results That Matter",
+    content:
+      "• 20+ successful projects delivered\n• Trusted by founders, students, and enterprises\n• Passionate about innovation and quality\n• Your growth is our mission",
+  },
 ];
 
 export const AboutSection = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [currentSection, setCurrentSection] = useState(0);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const containerRect = container.getBoundingClientRect();
-          const containerTop = containerRect.top;
-          const viewportHeight = window.innerHeight;
-          
-          // Calculate which section should be active based on scroll position
-          const scrollFromTop = -containerTop;
-          const sectionHeight = viewportHeight * 1.2; // 120vh per section
-          
-          let newSection = Math.floor(scrollFromTop / sectionHeight);
-          newSection = Math.max(0, Math.min(sections.length - 1, newSection));
-          
-          if (newSection !== currentSection) {
-            setCurrentSection(newSection);
-          }
-          
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial check
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [currentSection]);
-
   return (
-    <div 
-      id="about" 
-      ref={containerRef} 
-      className="relative bg-background"
-      style={{ height: `${sections.length * 120}vh` }}
-    >
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div
-            className="absolute -top-1/2 -left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
-            animate={{
-              x: [0, 100, 0],
-              y: [0, 50, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-          <motion.div
-            className="absolute -bottom-1/2 -right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
-            animate={{
-              x: [0, -100, 0],
-              y: [0, -50, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
+    <div id="about" className="relative bg-background py-6 md:py-8">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-7xl">
+        {/* Header - Consistent with other sections */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-semibold text-center mb-2 text-foreground">
+            <span className="text-primary">D6VS</span> — Your Digital Growth Partner
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            We help brands and startups turn ideas into powerful digital products — from web and mobile to AI and beyond.
+          </p>
         </div>
 
-        <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-7xl relative z-10 h-full flex items-center">
-          
-          {/* Progress Dots - Left Side */}
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8 }}
-            className="absolute left-6 md:left-12 lg:left-16 top-1/2 -translate-y-1/2 flex flex-col gap-6"
-          >
-            {sections.map((_, index) => (
-              <motion.div
-                key={index}
-                className="relative flex items-center justify-center"
-              >
-                {/* Background dot */}
-                <div className={`w-3 h-3 rounded-full transition-all duration-500 ${
-                  index === currentSection 
-                    ? "bg-primary scale-125" 
-                    : "bg-border/50 hover:bg-muted-foreground/50"
-                }`} />
-                
-                {/* Progress ring for current section */}
-                {index === currentSection && (
-                  <motion.div
-                    className="absolute inset-0 rounded-full border-2 border-primary"
-                    initial={{ scale: 1, opacity: 0.5 }}
-                    animate={{ 
-                      scale: [1, 1.8, 1],
-                      opacity: [0.5, 0, 0.5]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  />
-                )}
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Main Content - Center */}
-          <div className="flex-1 text-center px-16 md:px-24">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentSection}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -50 }}
-                transition={{ 
-                  duration: 0.6,
-                  ease: [0.22, 1, 0.36, 1]
-                }}
-                className="space-y-6 md:space-y-8"
-              >
-                {/* Title */}
-                <motion.h2 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground"
-                >
-                  {sections[currentSection]?.title}
-                </motion.h2>
-                
-                {/* Subtitle */}
-                <motion.p 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="text-xl md:text-2xl lg:text-3xl text-primary font-semibold"
-                >
-                  {sections[currentSection]?.subtitle}
-                </motion.p>
-                
-                {/* Content */}
-                <motion.p 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto"
-                >
-                  {sections[currentSection]?.content}
-                </motion.p>
-
-                
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Scroll Indicator - Right Side */}
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1, duration: 0.6 }}
-            className="absolute right-6 md:right-12 lg:right-16 top-1/2 -translate-y-1/2 flex flex-col items-center gap-3"
-          >
-            <div className="text-sm font-medium text-muted-foreground">
-              {currentSection + 1}/{sections.length}
-            </div>
-            <div className="w-[1px] h-12 bg-border relative overflow-hidden">
-              <motion.div
-                className="absolute inset-x-0 top-0 bg-primary"
-                initial={{ height: "0%" }}
-                animate={{ height: `${((currentSection + 1) / sections.length) * 100}%` }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-              />
-            </div>
-            <motion.div 
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              className="text-muted-foreground"
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 md:gap-y-10">
+          {sections.map((section, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="relative group"
             >
-              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 4V16M10 16L6 12M10 16L14 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </motion.div>
-            <span className="text-[10px] text-muted-foreground font-medium tracking-wider">SCROLL</span>
-          </motion.div>
+              <div className="space-y-4 pt-8">
+                {/* Title */}
+                <div className="space-y-2">
+                  <h3 className="text-2xl md:text-3xl font-light text-foreground tracking-tight">
+                    {section.title}
+                  </h3>
+                  <motion.div
+                    className="h-px bg-primary"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "30%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                  />
+                </div>
 
+                {/* Subtitle */}
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-px bg-primary/50" />
+                  <p className="text-sm md:text-base text-primary font-light">
+                    {section.subtitle}
+                  </p>
+                </div>
+
+                {/* Content */}
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed font-light pt-2">
+                  {section.content}
+                </p>
+              </div>
+
+              {/* Hover effect circle */}
+              <motion.div className="absolute -bottom-4 -right-4 w-20 h-20 border border-border/30 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            </motion.div>
+          ))}
         </div>
       </div>
     </div>

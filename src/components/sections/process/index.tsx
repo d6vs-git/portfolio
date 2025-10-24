@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { processData } from "@/data/process-data";
 import { motion, AnimatePresence } from "motion/react";
+import Image from "next/image";
 
 export const ProcessSection = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -34,33 +35,41 @@ export const ProcessSection = () => {
                   }`}
                 >
                   {/* Step number circle */}
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-all duration-300 ${
-                    activeStep === index 
-                      ? "bg-primary text-white" 
-                      : "bg-muted text-muted-foreground"
-                  }`}>
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-all duration-300 ${
+                      activeStep === index
+                        ? "bg-primary text-white"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
                     {String(index + 1).padStart(2, "0")}
                   </div>
-                  
+
                   {/* Step title */}
-                  <span className={`text-xs font-medium text-center transition-colors duration-300 ${
-                    activeStep === index ? "text-primary" : "text-muted-foreground"
-                  }`}>
+                  <span
+                    className={`text-xs font-medium text-center transition-colors duration-300 ${
+                      activeStep === index
+                        ? "text-primary"
+                        : "text-muted-foreground"
+                    }`}
+                  >
                     {step.title}
                   </span>
                 </button>
-                
+
                 {/* Connector line */}
                 {index < processData.length - 1 && (
-                  <div className={`h-0.5 w-8 mx-1 transition-colors duration-300 ${
-                    activeStep > index ? "bg-primary" : "bg-border"
-                  }`} />
+                  <div
+                    className={`h-0.5 w-8 mx-1 transition-colors duration-300 ${
+                      activeStep > index ? "bg-primary" : "bg-border"
+                    }`}
+                  />
                 )}
               </div>
             ))}
           </div>
 
-          {/* Centered Detail Card */}
+          {/* Side-by-side Detail Card */}
           <div className="flex justify-center">
             <AnimatePresence mode="wait">
               <motion.div
@@ -69,39 +78,48 @@ export const ProcessSection = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
-                className="bg-card border border-border rounded-2xl p-8 md:p-10 max-w-3xl w-full"
+                className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center bg-transparent"
               >
-                {/* Badge */}
-                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1.5 rounded-full text-xs font-medium mb-4">
-                  Step {activeStep + 1} of {processData.length}
+                {/* Image */}
+                <div className="flex justify-center items-center">
+                  <div className="w-full max-w-[340px] aspect-square flex items-center justify-center">
+                    <Image
+                      src={processData[activeStep].image}
+                      alt={processData[activeStep].title}
+                      width={340}
+                      height={340}
+                      className="object-cover w-full h-full rounded-xl"
+                      priority
+                    />
+                  </div>
                 </div>
-
-                {/* Title */}
-                <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-4">
-                  {processData[activeStep].title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-base text-muted-foreground leading-relaxed mb-6">
-                  {processData[activeStep].description}
-                </p>
-
-                {/* Navigation buttons */}
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
-                    disabled={activeStep === 0}
-                    className="px-5 py-2.5 rounded-lg border border-border hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 text-sm font-medium"
-                  >
-                    Previous
-                  </button>
-                  <button
-                    onClick={() => setActiveStep(Math.min(processData.length - 1, activeStep + 1))}
-                    disabled={activeStep === processData.length - 1}
-                    className="px-5 py-2.5 rounded-lg bg-primary text-white hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 text-sm font-medium"
-                  >
-                    Next
-                  </button>
+                {/* Content */}
+                <div className="flex flex-col justify-center h-full w-full max-w-2xl mx-auto">
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4 text-center md:text-left">
+                    {processData[activeStep].title}
+                  </h3>
+                  <p className="text-base text-muted-foreground leading-relaxed mb-8 text-center md:text-left">
+                    {processData[activeStep].description}
+                  </p>
+                  {/* Navigation buttons */}
+                  <div className="flex items-center gap-3 mt-2 w-full justify-end">
+                    {activeStep > 0 && (
+                      <button
+                        onClick={() => setActiveStep(activeStep - 1)}
+                        className="px-5 py-2.5 rounded-lg bg-background text-foreground text-sm font-medium transition-all duration-200 hover:bg-muted"
+                      >
+                        Previous
+                      </button>
+                    )}
+                    {activeStep < processData.length - 1 && (
+                      <button
+                        onClick={() => setActiveStep(activeStep + 1)}
+                        className="px-5 py-2.5 rounded-lg bg-primary text-white hover:opacity-90 transition-all duration-200 text-sm font-medium"
+                      >
+                        Next
+                      </button>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>

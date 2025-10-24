@@ -2,7 +2,7 @@ export const servicesData = [
   {
     front: {
       title: "Websites",
-      image: "/assets/services/image.png",
+      image: "/assets/services/web-dev.png",
       description: "Custom web solutions",
     },
     back: {
@@ -18,7 +18,7 @@ export const servicesData = [
   {
     front: {
       title: "Mobile Apps",
-      image: "/assets/services/image.png",
+      image: "/assets/services/mobile-apps.png",
       description: "Cross-platform apps",
     },
     back: {
@@ -34,7 +34,7 @@ export const servicesData = [
   {
     front: {
       title: "SEO",
-      image: "/assets/services/image.png",
+      image: "/assets/services/seo.png",
       description: "Search optimization",
     },
     back: {
@@ -50,7 +50,7 @@ export const servicesData = [
   {
     front: {
       title: "Machine Learning",
-      image: "/assets/services/image.png",
+      image: "/assets/services/ml.png",
       description: "AI-powered solutions",
     },
     back: {
@@ -66,7 +66,7 @@ export const servicesData = [
   {
     front: {
       title: "Deep Learning",
-      image: "/assets/services/image.png",
+      image: "/assets/services/dl.png",
       description: "Neural networks",
     },
     back: {
@@ -82,7 +82,7 @@ export const servicesData = [
   {
     front: {
       title: "AI Solutions",
-      image: "/assets/services/image.png",
+      image: "/assets/services/ai.png",
       description: "Intelligent automation",
     },
     back: {
@@ -98,7 +98,7 @@ export const servicesData = [
   {
     front: {
       title: "Web3",
-      image: "/assets/services/image.png",
+      image: "/assets/services/web3.png",
       description: "Blockchain development",
     },
     back: {
@@ -114,7 +114,7 @@ export const servicesData = [
   {
     front: {
       title: "DevOps",
-      image: "/assets/services/image.png",
+      image: "/assets/services/devops.png",
       description: "Cloud infrastructure",
     },
     back: {
@@ -130,7 +130,7 @@ export const servicesData = [
   {
     front: {
       title: "E-commerce",
-      image: "/assets/services/image.png",
+      image: "/assets/services/ecomm.png",
       description: "Online stores",
     },
     back: {
