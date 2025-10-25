@@ -39,10 +39,11 @@ export const FollowerPointerCard = ({
     };
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (rect) {
       x.set(e.clientX);
       y.set(e.clientY);
+      setIsInside(true);
     }
   };
   
@@ -50,8 +51,11 @@ export const FollowerPointerCard = ({
     setIsInside(false);
   };
 
-  const handleMouseEnter = () => {
-    setIsInside(true);
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (rect) {
+      x.set(e.clientX);
+      y.set(e.clientY);
+    }
   };
   
   return (

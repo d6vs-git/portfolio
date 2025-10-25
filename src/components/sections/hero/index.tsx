@@ -134,8 +134,11 @@ export const HeroSection = () => {
             <h1 className="text-4xl md:text-6xl text-foreground leading-tight mb-3">
               Hi, I&apos;m <span className="text-primary">D6VS!</span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-3">
-              Digital Innovation Partners
+            <p className="text-xl md:text-2xl text-primary font-semibold mb-3">
+              Your Vision, Brought to life
+            </p>
+            <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+              Turn your ideas into action and make them matter. Your vision, alive, impactful, and seen by the world.
             </p>
             <div className="text-lg text-primary font-medium">
               <FlipText />

@@ -3,11 +3,12 @@
 import { projectsData } from "@/data/projects-data";
 import { ProjectCard } from "./project-card";
 import { Button } from "@/components/common/button";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { gsap } from "gsap";
 
 export const ProjectsSection = () => {
+  const [showAll, setShowAll] = useState(false);
   const sharedCursorRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -63,9 +64,9 @@ export const ProjectsSection = () => {
           </p>
         </div>
 
-        {/* Projects Grid - Exact 2x2 layout like the image */}
+        {/* Projects Grid - show first 4 by default, expand on demand */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 max-w-6xl mx-auto">
-          {projectsData.map((project, index) => (
+          {(showAll ? projectsData : projectsData.slice(0, 4)).map((project, index) => (
             <ProjectCard
               key={index}
               title={project.title}
@@ -81,9 +82,14 @@ export const ProjectsSection = () => {
         </div>
 
         {/* View More Section */}
-        <div className="mt-20 text-center">
-           <Button text="View More"/>
-        </div>
+        {projectsData.length > 4 && (
+          <div className="mt-20 text-center">
+            <Button
+              text={showAll ? "Show Less" : `View More (${projectsData.length - 4})`}
+              onClick={() => setShowAll((s) => !s)}
+            />
+          </div>
+        )}
        
       </div>
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { ErrorBoundary } from "@/components/common/error-boundary";
-import Image from "next/image";
+import FloatingContactMenu from "@/components/sections/contact/floating-contact";
 
 export const metadata: Metadata = {
   title: {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: "%s | D6VS",
   },
   description:
-    "Professional digital solutions from design to deployment. We create websites, mobile apps, AI solutions, and provide comprehensive digital services.",
+    "Turn your ideas into action and make them matter. Your vision, alive, impactful, and seen by the world.",
   keywords: [
     "web development",
     "mobile apps",
@@ -30,16 +30,21 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://d6vs.com",
-    title: "D6VS - Professional Digital Solutions",
+    title: "D6VS - Your Vision, Brought to life",
     description:
-      "Professional digital solutions from design to deployment. We create websites, mobile apps, AI solutions, and provide comprehensive digital services.",
+      "Turn your ideas into action and make them matter. Your vision, alive, impactful, and seen by the world.",
     siteName: "D6VS",
   },
   twitter: {
     card: "summary_large_image",
-    title: "D6VS - Professional Digital Solutions",
-    description: "Professional digital solutions from design to deployment.",
+    title: "D6VS - Your Vision, Brought to life",
+    description: "Turn your ideas into action and make them matter.",
     creator: "@d6vs",
+  },
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+    other: [{ rel: "mask-icon", url: "/logo.png" }],
   },
   robots: {
     index: true,
@@ -72,6 +77,12 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link rel="dns-prefetch" href="https://wa.me" />
+        {/* Site icons - prefer /favicon.ico for compatibility, fall back to logo.png */}
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="mask-icon" href="/logo.png" color="#000000" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="font-sans antialiased bg-background text-foreground">
         <ErrorBoundary>
@@ -93,24 +104,7 @@ export default function RootLayout({
 
           {/* WhatsApp Float Button */}
           <aside aria-label="Contact via WhatsApp">
-            <a
-              href="https://wa.me/919494711703?text=Hello%20D6VS%20i%20have%20a%20project%20for%20you"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="fixed bottom-6 right-6 z-50 cursor-pointer hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-full"
-              aria-label="Contact us on WhatsApp"
-            >
-              <Image
-                src="/assets/socials/whatsapp.png"
-                alt="WhatsApp"
-                width={80}
-                height={80}
-                className="hover:opacity-100 transition-opacity duration-300 drop-shadow-lg"
-                style={{ objectFit: "cover", opacity: 0.8 }}
-                priority={false}
-                loading="lazy"
-              />
-            </a>
+            <FloatingContactMenu />
           </aside>
         </ErrorBoundary>
       </body>

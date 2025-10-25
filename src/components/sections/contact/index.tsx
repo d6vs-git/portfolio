@@ -3,8 +3,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Mail, Phone, Youtube, MessageCircle } from "lucide-react";
-import { Button } from "@/components/common/button";
+import Image from "next/image";
 
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
@@ -75,32 +74,32 @@ export const ContactSection = () => {
 
   const contactMethods = [
     {
-      icon: Mail,
+      img: "/assets/contact/mail.png",
       label: "Email",
       value: "abc.d6vs@gmail.com",
       href: "mailto:abc.d6vs@gmail.com",
       description: "Drop us an email",
     },
     {
-      icon: Phone,
+      img: "/assets/contact/call.png",
       label: "Contact",
       value: "+91 9494711703",
       href: "tel:+919494711703",
       description: "Give us a call",
     },
     {
-      icon: MessageCircle,
+      img: "/assets/contact/whatsapp.png",
       label: "WhatsApp",
       value: "+91 9494711703",
       href: "https://wa.me/919494711703?text=Hello%20D6VS%20i%20have%20a%20project%20for%20you",
       description: "Chat with us",
     },
     {
-      icon: Youtube,
-      label: "YouTube",
-      value: "D6VS Channel",
-      href: "https://www.youtube.com/@D6VS-j4u",
-      description: "Watch our content",
+      img: "/assets/contact/form.png",
+      label: "Form",
+      value: "Project Form",
+      href: "/assets/contact/form.png",
+      description: "Fill our project form",
     },
   ];
 
@@ -123,7 +122,6 @@ export const ContactSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {contactMethods.map((method, index) => {
-            const Icon = method.icon;
             return (
               <div
                 key={method.label}
@@ -143,8 +141,8 @@ export const ContactSection = () => {
                   className="block"
                 >
                   <div className="bg-card border border-border rounded-xl p-6 text-center hover:border-primary/50 transition-colors duration-300 h-full">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
-                      <Icon className="w-8 h-8 text-primary" />
+                    <div className="w-16 h-16 mx-auto mb-4  flex items-center justify-center group-hover:opacity-90 transition-all duration-300 overflow-hidden">
+                      <Image src={method.img} alt={method.label} width={64} height={64} className="object-contain" />
                     </div>
                     <h3 className="font-semibold text-lg mb-2 text-foreground">
                       {method.label}
@@ -162,17 +160,7 @@ export const ContactSection = () => {
           })}
         </div>
 
-        <div className="text-center mt-16">
-          <Button
-            text="Start Your Project"
-            onClick={() =>
-              window.open(
-                "https://wa.me/919494711703?text=Hello%20D6VS%20i%20have%20a%20project%20for%20you",
-                "_blank"
-              )
-            }
-          />
-        </div>
+
       </div>
     </section>
   );

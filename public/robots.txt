@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://d6vs.com/sitemap.xml
+Sitemap: https://d6vs.tech/sitemap.xml
 
 # Crawl-delay (optional)
 Crawl-delay: 1

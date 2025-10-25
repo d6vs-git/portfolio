@@ -14,7 +14,7 @@ export const ProcessSection = () => {
         {/* Header - Consistent with other sections */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-semibold text-center mb-2 text-foreground">
-            How we make a <span className="text-primary">deal</span>
+            How we make a <span className="text-primary">Deal</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             A proven methodology that ensures successful project delivery from

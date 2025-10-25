@@ -35,9 +35,9 @@ export const ProjectCard = ({
 
     if (!card || !imageContainer) return;
 
-    const handleMouseEnter = () => {
-      setIsHovered(true);
-      onCursorShow?.();
+    const handleMouseEnter = (e: MouseEvent) => {
+      // Initialize cursor position immediately on enter
+      onCursorMove?.(e);
 
       // Animate image scale with better easing
       gsap.to(imageContainer, {
@@ -60,7 +60,11 @@ export const ProjectCard = ({
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isHovered) return;
+      if (!isHovered) {
+        setIsHovered(true);
+        onCursorShow?.();
+        return;
+      }
       onCursorMove?.(e);
     };
 
@@ -77,7 +81,7 @@ export const ProjectCard = ({
 
   return (
     <div ref={cardRef} className={`relative group ${className}`}>
-      <a href={href} className="block cursor-none">
+  <a href={href} target="_blank" rel="noopener noreferrer" className="block cursor-none">
         {/* Image Container */}
         <div
           ref={imageRef}
