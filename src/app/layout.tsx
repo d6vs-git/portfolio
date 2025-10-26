@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/ui/navbar";
 import FloatingContactMenu from "@/components/sections/contact/floating-contact";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: {
@@ -105,6 +106,7 @@ export default function RootLayout({
           <aside aria-label="Contact via WhatsApp">
             <FloatingContactMenu />
           </aside>
+          <Analytics/>
       </body>
     </html>
   );
