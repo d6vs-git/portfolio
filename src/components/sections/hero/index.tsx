@@ -10,26 +10,6 @@ const HeroSection: React.FC = () => {
       id="home"
       className="min-h-screen overflow-hidden relative bg-white"
     >
-      {/* Subtle Background Glows */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div
-          className="absolute -top-64 -left-64 w-[600px] h-[600px] opacity-30"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(249, 115, 22, 0.3) 0%, rgba(251, 146, 60, 0.2) 30%, transparent 70%)",
-            filter: "blur(80px)",
-          }}
-        />
-        <div
-          className="absolute -top-64 -right-64 w-[600px] h-[600px] opacity-30"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(249, 115, 22, 0.3) 0%, rgba(251, 146, 60, 0.2) 30%, transparent 70%)",
-            filter: "blur(80px)",
-          }}
-        />
-      </div>
-
       <div className="font-extrabold h-screen w-screen relative">
         {/* Top Half - D6VS Logo with Spring Animation */}
         <div className="flex items-end justify-center h-1/2 text-8xl md:text-9xl lg:text-[12rem] relative z-10">
