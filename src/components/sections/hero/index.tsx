@@ -1,177 +1,93 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import gsap from "gsap";
+import React from "react";
 import Image from "next/image";
-import { Button } from "@/components/common/button";
-import { FlipText } from "./flip-text";
-import { HappyClients } from "./happy-clients";
-import { MarqueeText } from "./marquee-text";
 
-export const HeroSection = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    const logo = logoRef.current;
-
-    if (container && logo) {
-      // Floating tech icons
-      const floatingElements = container.querySelectorAll(".floating-tech");
-
-      // Logo gentle floating
-      gsap.to(logo, {
-        y: -10,
-        duration: 3,
-        repeat: -1,
-        yoyo: true,
-        ease: "power1.inOut",
-      });
-
-      // Animate each floating tech icon - only movement, no rotation
-      floatingElements.forEach((element, index) => {
-        const el = element as HTMLElement;
-
-        // Random floating animation for each tech icon
-        gsap.to(el, {
-          y: -30 - index * 5,
-          x: Math.sin(index) * 20,
-          duration: 4 + index * 0.5,
-          repeat: -1,
-          yoyo: true,
-          ease: "power1.inOut",
-        });
-      });
-    }
-  }, []);
-
+const HeroSection: React.FC = () => {
   return (
-    <section
-      id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background"
-    >
-      {/* Background Marquee Text */}
-      <div className="absolute inset-0 pointer-events-none top-1/3 opacity-60">
-        <MarqueeText />
+    <section id="home" className="min-h-screen overflow-hidden relative bg-white">
+      {/* Subtle Background Glows */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-64 -left-64 w-[600px] h-[600px] opacity-30" style={{
+          background: 'radial-gradient(circle, rgba(249, 115, 22, 0.3) 0%, rgba(251, 146, 60, 0.2) 30%, transparent 70%)',
+          filter: 'blur(80px)'
+        }} />
+        <div className="absolute -top-64 -right-64 w-[600px] h-[600px] opacity-30" style={{
+          background: 'radial-gradient(circle, rgba(249, 115, 22, 0.3) 0%, rgba(251, 146, 60, 0.2) 30%, transparent 70%)',
+          filter: 'blur(80px)'
+        }} />
       </div>
 
-      {/* Floating Tech Icons */}
-      <div ref={containerRef} className="absolute inset-0 pointer-events-none">
-        {/* React - Top Left */}
-        <div className="floating-tech absolute top-24 left-80">
-          <Image
-            src="/assets/hero/react.png"
-            alt="React"
-            width={150}
-            height={150}
-            className="object-contain drop-shadow-lg"
-          />
+      <div className="font-extrabold h-screen w-screen relative">
+        {/* Top Half - D6VS Logo */}
+        <div className="flex items-end justify-center h-1/2 text-8xl md:text-9xl lg:text-[12rem] relative z-10">
+          <span className="text-foreground/80">D</span>
+          <span className="text-primary">6</span>
+          <span className="text-foreground/80">V</span>
+          <span className="text-foreground/80">S</span>
         </div>
 
-        {/* JavaScript - Top Right */}
-        <div className="floating-tech absolute top-32 right-80">
-          <Image
-            src="/assets/hero/javascript.png"
-            alt="JavaScript"
-            width={150}
-            height={150}
-            className="object-contain drop-shadow-lg"
+        {/* <div className="absolute inset-0 w-full h-full pointer-events-none">
+          <div 
+            className="absolute inset-0 w-full h-full"
+            style={{
+              background: 'radial-gradient(ellipse 100px 100px at -5% 60%, rgba(234, 88, 12, 0.95) 0%, rgba(249, 115, 22, 0.85) 15%, rgba(251, 146, 60, 0.7) 30%, rgba(253, 186, 116, 0.4) 50%, rgba(254, 215, 170, 0.2) 70%, transparent 100%)'
+            }}
           />
-        </div>
-
-        {/* TypeScript - Left Middle */}
-        <div className="floating-tech absolute top-1/2 left-20 transform -translate-y-1/2">
-          <Image
-            src="/assets/hero/type-script.png"
-            alt="TypeScript"
-            width={150}
-            height={150}
-            className="object-contain drop-shadow-lg"
+          
+          <div 
+            className="absolute -left-82 top-[90%] -translate-y-1/2 w-[900px] h-[900px]"
+            style={{
+              background: 'radial-gradient(circle, rgba(234, 88, 12, 0.9) 0%, rgba(249, 115, 22, 0.6) 25%, rgba(251, 146, 60, 0.3) 50%, transparent 75%)',
+              filter: 'blur(60px)'
+            }}
           />
-        </div>
 
-        {/* Node.js - Right Middle */}
-        <div className="floating-tech absolute top-1/2 right-24">
-          <Image
-            src="/assets/hero/nodejs.png"
-            alt="Node.js"
-            width={150}
-            height={150}
-            className="object-contain drop-shadow-lg"
+          <div 
+            className="absolute left-10 top-[65%] -translate-y-1/2 w-[500px] h-[500px]"
+            style={{
+              background: 'radial-gradient(circle, rgba(234, 88, 12, 1) 0%, rgba(249, 115, 22, 0.8) 30%, transparent 70%)',
+              filter: 'blur(40px)'
+            }}
           />
-        </div>
+        </div> */}
 
-        {/* Tailwind - Bottom Left */}
-        <div className="floating-tech absolute bottom-24 left-60">
-          <Image
-            src="/assets/hero/tailwind.png"
-            alt="Tailwind"
-            width={150}
-            height={150}
-            className="object-contain drop-shadow-lg"
-          />
-        </div>
+        {/* Bottom Half - Description */}
+        <div className="relative h-1/2 w-full flex justify-start items-end z-10">
+          {/* Content Container */}
+          <div className="w-full h-full flex items-end">
+            <div className="grid lg:grid-cols-2 gap-8 w-full p-8 md:p-12 lg:p-16">
+              {/* Left: Text Content */}
+              <div>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                  Your Vision, Brought to life
+                  <br />
+                  <span className="block mt-4 md:mt-6 text-md md:text-lg lg:text-xl font-normal text-gray-700 leading-relaxed">
+                    From discovery and prototyping to development, deployment, and
+                    ongoing iteration, we partner with you to ship useful, delightful,
+                    and maintainable products
+                  </span>
+                </h1>
+              </div>
 
-        {/* Flutter - Bottom Right */}
-        <div className="floating-tech absolute bottom-24 right-60">
-          <Image
-            src="/assets/hero/git.png"
-            alt="Git"
-            width={150}
-            height={150}
-            className="object-contain drop-shadow-lg"
-          />
-        </div>
-      </div>
-
-      {/* Main Content Container */}
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Center Content */}
-        <div className="text-center max-w-4xl mx-auto">
-          {/* Text Content at Top */}
-          <div className="mb-8">
-            <h1 className="text-4xl md:text-6xl text-foreground leading-tight mb-3">
-              Hi, I&apos;m <span className="text-primary">D6VS!</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-primary font-semibold mb-3">
-              Your Vision, Brought to life
-            </p>
-            <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Turn your ideas into action and make them matter. Your vision, alive, impactful, and seen by the world.
-            </p>
-            <div className="text-lg text-primary font-medium">
-              <FlipText />
-            </div>
-          </div>
-
-          {/* Logo Below Text */}
-          <div ref={logoRef} className="mb-8 flex justify-center">
-            <div className="relative">
-              <div className="bg-gray-50 rounded-full p-8 shadow-lg">
-                <Image
-                  src="/logo.png"
-                  alt="D6VS Logo"
-                  width={200}
-                  height={200}
-                  className="object-contain rounded-full"
-                  priority
-                />
+              {/* Right: Logo */}
+              <div className="flex items-end justify-end">
+                <div className="w-48 h-48 md:w-64 md:h-64 relative">
+                  <Image
+                    src="/logo.png"
+                    alt="D6VS Logo"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* Happy Clients */}
-          <div className="mb-8 flex justify-center">
-            <HappyClients />
-          </div>
-
-          {/* CTA Button */}
-          <div>
-            <Button />
           </div>
         </div>
       </div>
     </section>
   );
 };
+
+export default HeroSection;
