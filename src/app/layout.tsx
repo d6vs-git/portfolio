@@ -95,7 +95,7 @@ export default function RootLayout({
           </a>
 
           {/* Navigation */}
-          <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+          <header className="fixed top-6 left-4 md:left-1/2 md:-translate-x-1/2 z-50">
             <Navbar />
           </header>
 

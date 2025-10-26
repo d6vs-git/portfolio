@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState, useCallback, useMemo } from "react"
 import gsap from "gsap"
+import { Menu, X } from "lucide-react"
 
 interface NavItem {
   name: string
@@ -10,7 +11,10 @@ interface NavItem {
 
 export const Navbar = () => {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [displayIndex, setDisplayIndex] = useState(0) // For delayed text color change
+  const [displayIndex, setDisplayIndex] = useState(0)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  
   const navItems: NavItem[] = useMemo(() => [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
@@ -21,11 +25,25 @@ export const Navbar = () => {
     { name: "Contact", href: "#contact" },
   ], [])
 
-  const refs = useRef<HTMLAnchorElement[]>([])
+  const refs = useRef<(HTMLAnchorElement | null)[]>([])
   const indicatorRef = useRef<HTMLDivElement>(null)
 
-  // Animate indicator to the active item
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Animate indicator to the active item (desktop only)
   const moveIndicator = useCallback((index: number) => {
+    if (isMobile) return
+    
     const el = refs.current[index]
     if (el && indicatorRef.current) {
       const { offsetLeft, offsetWidth } = el
@@ -35,24 +53,21 @@ export const Navbar = () => {
         duration: 0.2,
         ease: "power2.inOut",
         onUpdate: function() {
-          // Update text color at 50% of animation for perfect sync
           if (this.progress() >= 0.5 && displayIndex !== index) {
             setDisplayIndex(index)
           }
         }
       })
     }
-  }, [displayIndex])
+  }, [displayIndex, isMobile])
 
   // Section highlighting with scroll-based detection
   useEffect(() => {
-    // Use scroll-based detection for better accuracy with sticky/tall sections
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 3 // Check at 1/3 from top
+      const scrollPosition = window.scrollY + window.innerHeight / 3
       
       let newIndex = 0
       
-      // Check each section to find which one we're in
       for (let i = navItems.length - 1; i >= 0; i--) {
         const sectionId = navItems[i].href.replace('#', '')
         const section = document.getElementById(sectionId)
@@ -72,10 +87,8 @@ export const Navbar = () => {
       }
     }
 
-    // Initial check
     handleScroll()
     
-    // Listen to scroll events with throttling
     let ticking = false
     const scrollListener = () => {
       if (!ticking) {
@@ -95,11 +108,15 @@ export const Navbar = () => {
   }, [navItems, activeIndex])
 
   useEffect(() => {
-    moveIndicator(activeIndex)
-  }, [activeIndex, moveIndicator])
+    if (!isMobile) {
+      moveIndicator(activeIndex)
+    }
+  }, [activeIndex, moveIndicator, isMobile])
 
-  // Animate hover lift for non-active items
+  // Animate hover lift for non-active items (desktop only)
   useEffect(() => {
+    if (isMobile) return
+
     const cleanupFunctions: (() => void)[] = []
 
     refs.current.forEach((el, i) => {
@@ -125,32 +142,29 @@ export const Navbar = () => {
         el.addEventListener("mouseenter", handleMouseEnter)
         el.addEventListener("mouseleave", handleMouseLeave)
 
-        // Store cleanup function
         cleanupFunctions.push(() => {
           el.removeEventListener("mouseenter", handleMouseEnter)
           el.removeEventListener("mouseleave", handleMouseLeave)
         })
       } else {
-        // Ensure active item stays at y:0 and prevent hover effects
         gsap.to(el, { y: 0, duration: 0.2, ease: "power1.inOut" })
       }
     })
 
-    // Return cleanup function
     return () => {
       cleanupFunctions.forEach(cleanup => cleanup())
     }
-  }, [displayIndex])
+  }, [displayIndex, isMobile])
 
   const handleNavClick = (index: number, href: string) => {
     setActiveIndex(index)
-    setDisplayIndex(index) // Immediately update display for clicks
+    setDisplayIndex(index)
+    setMobileMenuOpen(false)
     
-    // Smooth scroll to section
     const sectionId = href.replace('#', '')
     const section = document.getElementById(sectionId)
     if (section) {
-      const navbarHeight = 80 // Approximate navbar height
+      const navbarHeight = 80
       const sectionTop = section.offsetTop - navbarHeight
       
       window.scrollTo({ 
@@ -160,36 +174,117 @@ export const Navbar = () => {
     }
   }
 
-  return (
-    <nav className="w-full flex justify-center" role="navigation" aria-label="Main navigation">
-      <div className="relative flex items-center rounded-full bg-background/80 backdrop-blur-md border border-border shadow-lg">
-        {/* Orange moving indicator */}
-        <div 
-          ref={indicatorRef} 
-          className="absolute top-0 bottom-0 rounded-full bg-primary" 
-          style={{ zIndex: 0 }}
-          aria-hidden="true"
-        />
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    if (!mobileMenuOpen) return
 
-        {navItems.map((item, i) => (
-          <a
-            key={item.name}
-            href={item.href}
-            ref={(el) => {
-              if (el) refs.current[i] = el
-            }}
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (!target.closest('nav')) {
+        setMobileMenuOpen(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [mobileMenuOpen])
+
+  return (
+    <>
+      {/* Desktop Navbar */}
+      <nav className="hidden md:flex w-full justify-center" role="navigation" aria-label="Main navigation">
+        <div className="relative flex items-center rounded-full bg-background/80 backdrop-blur-md border border-border shadow-lg">
+          <div 
+            ref={indicatorRef} 
+            className="absolute top-0 bottom-0 rounded-full bg-primary" 
+            style={{ zIndex: 0 }}
+            aria-hidden="true"
+          />
+
+          {navItems.map((item, i) => (
+            <a
+              key={item.name}
+              href={item.href}
+              ref={(el) => {
+                refs.current[i] = el
+              }}
+              onClick={(e) => {
+                e.preventDefault()
+                handleNavClick(i, item.href)
+              }}
+              className={`relative z-10 px-3 lg:px-5 py-2 lg:py-3 rounded-full text-xs lg:text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2
+                ${i === displayIndex ? "text-primary-foreground" : "text-foreground hover:text-primary"}`}
+              aria-current={i === displayIndex ? "page" : undefined}
+            >
+              {item.name}
+            </a>
+          ))}
+        </div>
+      </nav>
+
+      {/* Mobile Navbar */}
+      <nav className="md:hidden w-full px-4" role="navigation" aria-label="Main navigation">
+        <div className="flex items-center justify-between rounded-full bg-background/90 backdrop-blur-md border border-border shadow-lg px-5 py-3 max-w-xs">
+          <span className="text-base font-bold text-primary">D6VS</span>
+          
+          <button
             onClick={(e) => {
-              e.preventDefault()
-              handleNavClick(i, item.href)
+              e.stopPropagation()
+              setMobileMenuOpen(!mobileMenuOpen)
             }}
-            className={`relative z-10 px-5 py-3 rounded-full text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2
-              ${i === displayIndex ? "text-primary-foreground" : "text-foreground hover:text-primary"}`}
-            aria-current={i === displayIndex ? "page" : undefined}
+            className="p-2 rounded-full hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+            aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
           >
-            {item.name}
-          </a>
-        ))}
-      </div>
-    </nav>
+            {mobileMenuOpen ? (
+              <X className="w-5 h-5 text-foreground" />
+            ) : (
+              <Menu className="w-5 h-5 text-foreground" />
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="absolute top-16 left-4 w-36 bg-background/95 backdrop-blur-md border border-border rounded-2xl shadow-xl overflow-hidden animate-fade-in-down z-50">
+            {navItems.map((item, i) => (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleNavClick(i, item.href)
+                }}
+                className={`block px-6 py-4 text-base font-medium transition-colors border-b border-border/50 last:border-b-0
+                  ${i === activeIndex 
+                    ? "bg-primary text-primary-foreground" 
+                    : "text-foreground hover:bg-primary/10 active:bg-primary/20"
+                  }`}
+                aria-current={i === activeIndex ? "page" : undefined}
+              >
+                {item.name}
+              </a>
+            ))}
+          </div>
+        )}
+      </nav>
+
+      <style jsx>{`
+        @keyframes fadeInDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in-down {
+          animation: fadeInDown 0.2s ease-out forwards;
+        }
+      `}</style>
+    </>
   )
 }

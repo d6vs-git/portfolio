@@ -10,7 +10,103 @@ export const HeroSection: React.FC = () => {
       id="home"
       className="min-h-screen overflow-hidden relative bg-white"
     >
-      <div className="font-extrabold h-screen w-screen relative">
+      {/* Mobile Layout - Centered */}
+      <div className="lg:hidden font-extrabold h-screen w-screen relative px-4 sm:px-6 flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center w-full max-w-7xl mx-auto space-y-6 sm:space-y-8">
+          
+          {/* D6VS Logo */}
+          <div className="flex items-center justify-center text-7xl sm:text-8xl relative z-10">
+            <span
+              className="inline-block animate-spring-drop"
+              style={{ animationDelay: "0s" }}
+            >
+              <span className="text-foreground/80">D</span>
+            </span>
+            <span
+              className="inline-block animate-spring-drop"
+              style={{ animationDelay: "0.1s" }}
+            >
+              <span className="text-primary">6</span>
+            </span>
+            <span
+              className="inline-block animate-spring-drop"
+              style={{ animationDelay: "0.2s" }}
+            >
+              <span className="text-foreground/80">V</span>
+            </span>
+            <span
+              className="inline-block animate-spring-drop"
+              style={{ animationDelay: "0.3s" }}
+            >
+              <span className="text-foreground/80">S</span>
+            </span>
+          </div>
+
+          {/* FlipText */}
+          <div className="flex justify-center items-center">
+            <FlipTextController />
+          </div>
+
+          {/* Content - Stacked */}
+          <div className="w-full flex flex-col items-center space-y-6">
+            {/* Logo */}
+            <div
+              className="flex items-center justify-center animate-fade-in-up"
+              style={{ animationDelay: "0.8s" }}
+            >
+              <div className="w-48 h-48 sm:w-56 sm:h-56 relative">
+                <Image
+                  src="/logo.png"
+                  alt="D6VS Logo"
+                  fill
+                  className="object-contain rounded-full"
+                  priority
+                />
+              </div>
+            </div>
+
+            {/* Text Content */}
+            <div className="text-center px-4">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">
+                {"Your Vision, Brought to life"
+                  .split("")
+                  .map((char, index) => (
+                    <span
+                      key={`headline-${index}`}
+                      className="animate-text-reveal"
+                      style={{
+                        animationDelay: `${0.6 + index * 0.03}s`,
+                        opacity: 0,
+                      }}
+                    >
+                      {char}
+                    </span>
+                  ))}
+              </h1>
+              
+              <p className="mt-4 sm:mt-5 text-sm sm:text-base text-gray-700 leading-relaxed max-w-2xl mx-auto">
+                {"From discovery and prototyping to development, deployment, and ongoing iteration, we partner with you to ship useful, delightful, and maintainable products"
+                  .split("")
+                  .map((char, index) => (
+                    <span
+                      key={`desc-${index}`}
+                      className="animate-text-reveal"
+                      style={{
+                        animationDelay: `${1.4 + index * 0.015}s`,
+                        opacity: 0,
+                      }}
+                    >
+                      {char}
+                    </span>
+                  ))}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop/Tablet Layout - Original Design */}
+      <div className="hidden lg:block font-extrabold h-screen w-screen relative">
         {/* Top Half - D6VS Logo with Spring Animation */}
         <div className="flex items-end justify-center h-1/2 text-8xl md:text-9xl lg:text-[12rem] relative z-10">
           <span
@@ -179,7 +275,6 @@ export const HeroSection: React.FC = () => {
     </section>
   );
 };
-
 
 // Controller component: waits for the spring-drop animation to finish, then shows FlipText
 const FlipTextController: React.FC = () => {
