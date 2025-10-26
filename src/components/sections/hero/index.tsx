@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FlipText } from "./flip-text";
 
-const HeroSection: React.FC = () => {
+export const HeroSection: React.FC = () => {
   return (
     <section
       id="home"
@@ -180,7 +180,6 @@ const HeroSection: React.FC = () => {
   );
 };
 
-export default HeroSection;
 
 // Controller component: waits for the spring-drop animation to finish, then shows FlipText
 const FlipTextController: React.FC = () => {
