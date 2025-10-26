@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navbar } from "@/components/layout/navbar";
-import { ErrorBoundary } from "@/components/common/error-boundary";
+import { Navbar } from "@/components/ui/navbar";
 import FloatingContactMenu from "@/components/sections/contact/floating-contact";
 
 export const metadata: Metadata = {
@@ -29,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://d6vs.com",
+    url: "https://d6vs.tech",
     title: "D6VS - Your Vision, Brought to life",
     description:
       "Turn your ideas into action and make them matter. Your vision, alive, impactful, and seen by the world.",
@@ -85,7 +84,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="font-sans antialiased bg-background text-foreground">
-        <ErrorBoundary>
+       
           {/* Skip to main content for accessibility */}
           <a
             href="#main-content"
@@ -106,7 +105,6 @@ export default function RootLayout({
           <aside aria-label="Contact via WhatsApp">
             <FloatingContactMenu />
           </aside>
-        </ErrorBoundary>
       </body>
     </html>
   );

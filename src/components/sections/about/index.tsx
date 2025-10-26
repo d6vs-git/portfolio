@@ -1,42 +1,16 @@
 "use client";
 
+import { aboutData } from "@/data/about-data";
 import { motion } from "motion/react";
-
-const sections = [
-  {
-    title: "Who are we?",
-    subtitle: "Your Vision, Brought to life",
-    content:
-      "D6VS is a creative digital studio specializing in building impactful web, mobile, and AI-powered solutions for ambitious brands and startups. We blend design, technology, and strategy to help you stand out and grow in the digital world.",
-  },
-  {
-    title: "What we do",
-    subtitle: "Web, Mobile, AI & More",
-    content:
-      "From custom websites and mobile apps to advanced AI, machine learning, and Web3 solutions, we deliver end-to-end digital products that are beautiful, robust, and future-ready. Our expertise covers everything from UI/UX, SEO, and e-commerce to cloud infrastructure and DevOps.",
-  },
-  {
-    title: "Our Approach",
-    subtitle: "Collaboration & Quality",
-    content:
-      "We believe in close collaboration, transparent communication, and a process that puts your goals first. Every project starts with understanding your vision, followed by thoughtful design, precise development, and ongoing support.",
-  },
-  {
-    title: "Why D6VS?",
-    subtitle: "Results That Matter",
-    content:
-      "20+ successful projects delivered\n Trusted by founders, students, and enterprises\n Passionate about innovation and quality\n Your growth is our mission",
-  },
-];
 
 export const AboutSection = () => {
   return (
-    <div id="about" className="relative bg-background py-6 md:py-8">
+    <div id="about" className="relative bg-background py-6 md:py-8 mt-28">
       <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-7xl">
         {/* Header - Consistent with other sections */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-semibold text-center mb-2 text-foreground">
-            <span className="text-primary">D6VS</span> — Your Vision, Brought to life
+            <span className="text-primary"> Meet D6VS</span> - Your Digital Product Studio 
 
 
           </h2>
@@ -47,7 +21,7 @@ export const AboutSection = () => {
 
         {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 md:gap-y-10">
-          {sections.map((section, index) => (
+          {aboutData.map((section, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}

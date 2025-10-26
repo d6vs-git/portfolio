@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { contactData } from "@/data/contact-data";
 
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
@@ -72,36 +73,7 @@ export const ContactSection = () => {
     });
   }, []);
 
-  const contactMethods = [
-    {
-      img: "/assets/contact/mail.png",
-      label: "Email",
-      value: "abc.d6vs@gmail.com",
-      href: "mailto:abc.d6vs@gmail.com",
-      description: "Drop us an email",
-    },
-    {
-      img: "/assets/contact/call.png",
-      label: "Contact",
-      value: "+91 9494711703",
-      href: "tel:+919494711703",
-      description: "Give us a call",
-    },
-    {
-      img: "/assets/contact/whatsapp.png",
-      label: "WhatsApp",
-      value: "+91 9494711703",
-      href: "https://wa.me/919494711703?text=Hello%20D6VS%20i%20have%20a%20project%20for%20you",
-      description: "Chat with us",
-    },
-    {
-      img: "/assets/contact/form.png",
-      label: "Form",
-      value: "Project Form",
-      href: "/assets/contact/form.png",
-      description: "Fill our project form",
-    },
-  ];
+
 
   return (
     <section
@@ -121,7 +93,7 @@ export const ContactSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {contactMethods.map((method, index) => {
+          {contactData.map((method, index) => {
             return (
               <div
                 key={method.label}
