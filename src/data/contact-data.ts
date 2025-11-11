@@ -9,15 +9,15 @@ export   const contactData = [
     {
       img: "/assets/contact/call.png",
       label: "Contact",
-      value: "+91 9494711703",
-      href: "tel:+919494711703",
+      value: "+91 80742 50290",
+      href: "tel:+918074250290",
       description: "Give us a call",
     },
     {
       img: "/assets/contact/whatsapp.png",
       label: "WhatsApp",
-      value: "+91 9494711703",
-      href: "https://wa.me/919494711703?text=Hello%20D6VS%20i%20have%20a%20project%20for%20you",
+      value: "+91 80742 50290",
+      href: "https://wa.me/918074250290?text=Hello%20D6VS%20i%20have%20a%20project%20for%20you",
       description: "Chat with us",
     },
     {
