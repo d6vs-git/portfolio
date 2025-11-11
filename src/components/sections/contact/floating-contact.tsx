@@ -12,12 +12,12 @@ const contactMethods = [
   {
     img: "/assets/contact/call.png",
     label: "Contact",
-    href: "tel:+919494711703",
+    href: "tel:+918074250290",
   },
   {
     img: "/assets/contact/whatsapp.png",
     label: "WhatsApp",
-    href: "https://wa.me/919494711703?text=Hello%20D6VS%20i%20have%20a%20project%20for%20you",
+    href: "https://wa.me/918074250290?text=Hello%20D6VS%20i%20have%20a%20project%20for%20you",
   },
 ];
 
